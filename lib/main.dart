@@ -60,40 +60,6 @@ class _AllGamesState extends State<AllGames> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 100,
-          title: const Text(
-            "All Games",
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 28,
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 35, 20, 0),
-              child: Column(
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.search,
-                      size: 40,
-                    ),
-                    tooltip: 'Search for a game',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const SearchAllGames(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
         body: pages[_currentPage],
         bottomNavigationBar: BottomNavigationBar(
           iconSize: 30,

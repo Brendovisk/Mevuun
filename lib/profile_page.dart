@@ -12,6 +12,16 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 100,
+        title: const Text(
+          "Profile",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 28,
+          ),
+        ),
+      ),
       body: (ValueListenableBuilder(
         valueListenable: Hive.box('settings').listenable(),
         builder: (context, box, child) {
