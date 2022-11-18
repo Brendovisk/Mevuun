@@ -14,14 +14,11 @@ class SearchAllGames extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xfffafafa),
         shadowColor: Colors.transparent,
         toolbarHeight: 72,
-        foregroundColor: Colors.black87,
         title: const Text(
           "Search for a game",
           style: TextStyle(
-            color: Colors.black87,
             fontWeight: FontWeight.w600,
             fontSize: 24,
           ),
@@ -48,7 +45,7 @@ class SearchAllGames extends StatelessWidget {
             ),
             const Positioned(
               right: 0,
-              child: Icon(Icons.search, size: 30, color: Colors.black54),
+              child: Icon(Icons.search, size: 30),
             )
           ],
         ),

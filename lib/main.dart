@@ -3,17 +3,29 @@ import 'package:meevun_2/all_games_page.dart';
 import 'package:meevun_2/favorite_games_page.dart';
 import 'package:meevun_2/profile_page.dart';
 import 'package:meevun_2/search_all_games_page.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('settings');
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: AllGames(),
+    return ValueListenableBuilder(
+      valueListenable: Hive.box('settings').listenable(),
+      builder: (context, box, child) {
+        final isDark = box.get('isDark', defaultValue: false);
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: isDark ? ThemeData.dark() : ThemeData.light(),
+          home: const AllGames(),
+        );
+      },
     );
   }
 }
@@ -26,6 +38,7 @@ class AllGames extends StatefulWidget {
 }
 
 class _AllGamesState extends State<AllGames> {
+  // Load the page according to the selected BottomNavigationBarItem
   int _currentPage = 0;
   List<Widget> pages = const [
     AllGamesPage(),
@@ -38,13 +51,10 @@ class _AllGamesState extends State<AllGames> {
     return Scaffold(
       body: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xfffafafa),
-          shadowColor: Colors.transparent,
           toolbarHeight: 90,
           title: const Text(
             "All Games",
             style: TextStyle(
-              color: Colors.black87,
               fontWeight: FontWeight.w600,
               fontSize: 28,
             ),
@@ -57,7 +67,6 @@ class _AllGamesState extends State<AllGames> {
                   IconButton(
                     icon: const Icon(
                       Icons.search,
-                      color: Colors.black87,
                       size: 30,
                     ),
                     tooltip: 'Search for a game',
@@ -95,7 +104,6 @@ class _AllGamesState extends State<AllGames> {
             ),
           ],
           currentIndex: _currentPage,
-          selectedItemColor: Colors.blue,
           onTap: (int index) {
             setState(() {
               _currentPage = index;

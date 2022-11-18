@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -8,30 +9,46 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  bool _isDarkTheme = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        label:
-            _isDarkTheme ? const Text("Light Theme") : const Text('Dark Theme'),
-        backgroundColor: _isDarkTheme ? Colors.white : Colors.black,
-        foregroundColor: _isDarkTheme ? Colors.black87 : Colors.white70,
-        splashColor: Colors.blue,
-        onPressed: () {
-          setState(() {
-            if (_isDarkTheme == false) {
-              _isDarkTheme = true;
-            } else {
-              _isDarkTheme = false;
-            }
-          });
+      body: (ValueListenableBuilder(
+        valueListenable: Hive.box('settings').listenable(),
+        builder: (context, box, child) {
+          final isDark = box.get('isDark', defaultValue: false);
+          bool enabledDarkMode = isDark;
+          return Stack(
+            children: [
+              Positioned(
+                bottom: 20,
+                right: 20,
+                child: FloatingActionButton.extended(
+                  label: enabledDarkMode
+                      ? const Text("Light Theme")
+                      : const Text('Dark Theme'),
+                  backgroundColor:
+                      enabledDarkMode ? Colors.white : Colors.black,
+                  foregroundColor:
+                      enabledDarkMode ? Colors.black87 : Colors.white70,
+                  icon: enabledDarkMode
+                      ? const Icon(Icons.dark_mode)
+                      : const Icon(Icons.light_mode),
+                  elevation: 1,
+                  onPressed: () {
+                    setState(() {
+                      if (enabledDarkMode == true) {
+                        box.put('isDark', false);
+                      } else {
+                        box.put('isDark', true);
+                      }
+                    });
+                  },
+                ),
+              ),
+            ],
+          );
         },
-        icon: _isDarkTheme
-            ? const Icon(Icons.dark_mode)
-            : const Icon(Icons.light_mode),
-      ),
+      )),
     );
   }
 }
