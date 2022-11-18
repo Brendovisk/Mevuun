@@ -26,10 +26,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   label: enabledDarkMode
                       ? const Text("Light Theme")
                       : const Text('Dark Theme'),
-                  backgroundColor:
-                      enabledDarkMode ? Colors.white : Colors.black,
-                  foregroundColor:
-                      enabledDarkMode ? Colors.black87 : Colors.white70,
                   icon: enabledDarkMode
                       ? const Icon(Icons.dark_mode)
                       : const Icon(Icons.light_mode),

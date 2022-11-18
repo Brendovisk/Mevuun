@@ -22,7 +22,17 @@ class MyApp extends StatelessWidget {
         final isDark = box.get('isDark', defaultValue: false);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: isDark ? ThemeData.dark() : ThemeData.light(),
+          theme: isDark
+              ? ThemeData(
+                  colorSchemeSeed: const Color(0xff6750a4),
+                  useMaterial3: true,
+                  brightness: Brightness.dark,
+                )
+              : ThemeData(
+                  colorSchemeSeed: const Color(0xff6750a4),
+                  useMaterial3: true,
+                  brightness: Brightness.light,
+                ),
           home: const AllGames(),
         );
       },
@@ -51,7 +61,7 @@ class _AllGamesState extends State<AllGames> {
     return Scaffold(
       body: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 90,
+          toolbarHeight: 100,
           title: const Text(
             "All Games",
             style: TextStyle(
@@ -61,13 +71,13 @@ class _AllGamesState extends State<AllGames> {
           ),
           actions: [
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(0, 35, 20, 0),
               child: Column(
                 children: [
                   IconButton(
                     icon: const Icon(
                       Icons.search,
-                      size: 30,
+                      size: 40,
                     ),
                     tooltip: 'Search for a game',
                     onPressed: () {
