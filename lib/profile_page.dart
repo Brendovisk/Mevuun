@@ -13,8 +13,12 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
+      floatingActionButton: FloatingActionButton.extended(
+        label:
+            _isDarkTheme ? const Text("Light Theme") : const Text('Dark Theme'),
+        backgroundColor: _isDarkTheme ? Colors.white : Colors.black,
+        foregroundColor: _isDarkTheme ? Colors.black87 : Colors.white70,
+        splashColor: Colors.blue,
         onPressed: () {
           setState(() {
             if (_isDarkTheme == false) {
@@ -24,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
             }
           });
         },
-        child: _isDarkTheme
+        icon: _isDarkTheme
             ? const Icon(Icons.dark_mode)
             : const Icon(Icons.light_mode),
       ),
