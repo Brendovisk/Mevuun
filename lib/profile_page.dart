@@ -37,8 +37,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ? const Text("Light Theme")
                       : const Text('Dark Theme'),
                   icon: enabledDarkMode
-                      ? const Icon(Icons.dark_mode)
-                      : const Icon(Icons.light_mode),
+                      ? const Icon(Icons.light_mode)
+                      : const Icon(Icons.dark_mode),
                   elevation: 1,
                   onPressed: () {
                     setState(() {
