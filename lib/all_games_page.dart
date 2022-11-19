@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:meevun_2/search_all_games_page.dart';
-
 import 'add_new_game_page.dart';
 
 class AllGamesPage extends StatefulWidget {
@@ -49,7 +48,11 @@ class AllGamesPageState extends State<AllGamesPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
         onPressed: () {
           Navigator.push(
             context,
@@ -68,7 +71,7 @@ class AllGamesPageState extends State<AllGamesPage> {
             children: [
               Card(
                 elevation: 5,
-                margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                margin: const EdgeInsets.only(bottom: 20),
                 color: Theme.of(context).colorScheme.surfaceVariant,
                 child: InkWell(
                   splashColor: Theme.of(context).colorScheme.surfaceVariant,
@@ -76,10 +79,8 @@ class AllGamesPageState extends State<AllGamesPage> {
                     debugPrint("Card Clicked");
                   },
                   child: SizedBox(
-                    width: double.infinity,
                     height: 300,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Stack(
                       children: [
                         ClipRRect(
                           borderRadius: const BorderRadius.only(
@@ -87,106 +88,33 @@ class AllGamesPageState extends State<AllGamesPage> {
                             topRight: Radius.circular(14),
                           ),
                           child: Image.network(
-                            'https://media.rawg.io/media/resize/1920/-/screenshots/dc5/dc5d251100154f7502b4b8510591cc5d.jpg',
+                            "https://media.rawg.io/media/crop/600/400/games/1c3/1c305096502c475c00276c827f0fd697.jpg",
                             height: 200,
                             width: double.infinity,
                             fit: BoxFit.cover,
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(15, 20, 15, 10),
+                        Positioned(
+                          bottom: 30,
+                          left: 15,
                           child: Text(
-                            "Cuphead",
-                            style: TextStyle(
+                            "God of War".toUpperCase(),
+                            style: const TextStyle(
                               fontSize: 28,
                               fontWeight: FontWeight.w600,
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Card(
-                elevation: 5,
-                margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                color: Theme.of(context).colorScheme.surfaceVariant,
-                child: InkWell(
-                  splashColor: Theme.of(context).colorScheme.surfaceVariant,
-                  onTap: () {
-                    debugPrint("Card Clicked");
-                  },
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 300,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(14),
-                            topRight: Radius.circular(14),
-                          ),
-                          child: Image.network(
-                            'https://media.rawg.io/media/resize/1920/-/screenshots/dc5/dc5d251100154f7502b4b8510591cc5d.jpg',
-                            height: 200,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(15, 20, 15, 10),
-                          child: Text(
-                            "Cuphead",
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Card(
-                elevation: 5,
-                margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                color: Theme.of(context).colorScheme.surfaceVariant,
-                child: InkWell(
-                  splashColor: Theme.of(context).colorScheme.surfaceVariant,
-                  onTap: () {
-                    debugPrint("Card Clicked");
-                  },
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 300,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(14),
-                            topRight: Radius.circular(14),
-                          ),
-                          child: Image.network(
-                            'https://media.rawg.io/media/resize/1920/-/screenshots/dc5/dc5d251100154f7502b4b8510591cc5d.jpg',
-                            height: 200,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
+                        Positioned(
+                          right: 20,
+                          bottom: 120,
+                          child: FloatingActionButton(
+                            child: const Icon(Icons.star_outline),
+                            onPressed: () {
+                              debugPrint("Make favorite");
+                            },
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(15, 20, 15, 10),
-                          child: Text(
-                            "Cuphead",
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        )
                       ],
                     ),
                   ),
