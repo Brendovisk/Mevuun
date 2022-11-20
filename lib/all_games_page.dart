@@ -1,4 +1,7 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:meevun_2/game_view_page.dart';
 import 'package:meevun_2/search_all_games_page.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'add_new_game_page.dart';
@@ -85,7 +88,12 @@ class AllGamesPageState extends State<AllGamesPage> {
                     child: InkWell(
                       splashColor: Theme.of(context).colorScheme.surfaceVariant,
                       onTap: () {
-                        debugPrint("Card Clicked");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const GameViewPage(),
+                          ),
+                        );
                       },
                       child: SizedBox(
                         height: 300,
