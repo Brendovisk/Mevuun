@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:meevun_2/game_view_page.dart';
-import 'package:meevun_2/search_all_games_page.dart';
+import 'package:meevun_2/pages/home/game_view.dart';
+import 'package:meevun_2/pages/search/search.dart';
 import 'package:responsive_grid/responsive_grid.dart';
-import 'add_new_game_page.dart';
+import 'add_new_game.dart';
 
 class AllGamesPage extends StatefulWidget {
   const AllGamesPage({super.key});

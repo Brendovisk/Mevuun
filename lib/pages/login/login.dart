@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meevun_2/create_account_page.dart';
+import 'package:meevun_2/pages/login/create_account.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

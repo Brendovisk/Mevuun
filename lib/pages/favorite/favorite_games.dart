@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meevun_2/search_all_games_page.dart';
+import 'package:meevun_2/pages/search/search.dart';
 
 class FavoriteGamesPage extends StatefulWidget {
   const FavoriteGamesPage({super.key});

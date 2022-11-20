@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:meevun_2/profile_edit_page.dart';
+import 'package:meevun_2/pages/profile/profile_edit.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meevun_2/all_games_page.dart';
-import 'package:meevun_2/favorite_games_page.dart';
-import 'package:meevun_2/profile_page.dart';
+import 'package:meevun_2/pages/home/all_games.dart';
+import 'package:meevun_2/pages/favorite/favorite_games.dart';
+import 'package:meevun_2/pages/profile/profile.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 Future<void> main() async {
