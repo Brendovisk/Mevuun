@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:meevun_2/game_view_page.dart';
 import 'package:meevun_2/search_all_games_page.dart';
