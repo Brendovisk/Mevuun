@@ -93,7 +93,6 @@ class GameViewPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 25, 10, 0),
             child: TextFormField(
-              restorationId: 'life_story_field',
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Write the description of the game",
