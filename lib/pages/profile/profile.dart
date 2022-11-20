@@ -17,19 +17,56 @@ class _ProfilePageState extends State<ProfilePage> {
         toolbarHeight: 100,
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-            child: IconButton(
-              icon: const Icon(
-                Icons.edit,
-                size: 28,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const ProfileEditPage(),
+            padding: const EdgeInsets.fromLTRB(0, 5, 15, 0),
+            child: PopupMenuButton<Text>(
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    height: 46,
+                    padding: const EdgeInsets.all(0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 46,
+                      child: TextButton.icon(
+                        style: TextButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.zero),
+                          ),
+                        ),
+                        icon: const Icon(Icons.edit),
+                        label: const Text("Edit"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const ProfileEditPage(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ),
-                );
+                  PopupMenuItem(
+                    height: 46,
+                    padding: const EdgeInsets.all(0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 46,
+                      child: TextButton.icon(
+                        style: TextButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.zero),
+                          ),
+                        ),
+                        icon: const Icon(Icons.logout),
+                        label: const Text("Logout"),
+                        onPressed: () {
+                          debugPrint("Logout");
+                        },
+                      ),
+                    ),
+                  ),
+                ];
               },
             ),
           ),
