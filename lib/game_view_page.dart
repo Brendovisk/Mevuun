@@ -106,11 +106,12 @@ class GameViewPage extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           debugPrint("Add to favorites");
         },
-        child: const Icon(Icons.star_outline),
+        label: const Text("Add to favorites"),
+        icon: const Icon(Icons.star_outline),
       ),
     );
   }

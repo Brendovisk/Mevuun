@@ -18,7 +18,7 @@ class AddNewgame extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
+        child: ListView(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +27,7 @@ class AddNewgame extends StatelessWidget {
                 const SizedBox(height: 8),
                 Image.asset(
                   "images/placeholder.jpg",
-                  height: 250,
+                  height: 300,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
@@ -53,13 +53,14 @@ class AddNewgame extends StatelessWidget {
               readOnly: false,
               maxLines: 6,
             ),
-            const Spacer(),
+            const SizedBox(height: 40),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    debugPrint("Return to the previous screen");
+                  },
                   child: const Text(
                     "Cancel",
                     style: TextStyle(
@@ -70,7 +71,9 @@ class AddNewgame extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    debugPrint("Save game");
+                  },
                   child: const Padding(
                     padding: EdgeInsets.fromLTRB(22, 8, 22, 8),
                     child: Text(
