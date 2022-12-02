@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meevun_2/pages/home/all_games.dart';
 import 'package:meevun_2/pages/favorite/favorite_games.dart';
+import 'package:meevun_2/pages/login/login.dart';
 import 'package:meevun_2/pages/profile/profile.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
                   useMaterial3: true,
                   brightness: Brightness.light,
                 ),
-          home: const AllGames(),
+          home: const LoginPage(),
         );
       },
     );

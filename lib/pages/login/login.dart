@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:meevun_2/pages/login/create_account.dart';
+import '../Usuarios.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -10,6 +13,33 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isObscure = true;
+
+  Future<Usuario> fetchUsuario(String id) async {
+    final response = await http
+        .get(Uri.parse('http://localhost:3000/api/V1/users/$id'));
+
+    if (response.statusCode == 200) {
+      var decodeUsuarios = json.decode(response.body);
+      Map <String, dynamic> lista = decodeUsuarios;
+      List<Usuario> listaUsuario = [];
+      Usuario usuario;
+
+      try {
+        // lista.forEach((value) {
+          // usuario = Usuario(value)
+        // })
+      } catch (e) {
+        
+      }
+
+
+      return Usuario.fromJson(jsonDecode(response.body));
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
