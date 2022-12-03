@@ -1,8 +1,12 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:meevun_2/main.dart';
 import 'package:meevun_2/pages/login/create_account.dart';
 import '../Usuarios.dart';
 import 'package:http/http.dart' as http;
+
+import '../home/all_games.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,32 +17,32 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isObscure = true;
+  String? email;
+  String? password;
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+  int requestCode = 0;
 
-  Future<Usuario> fetchUsuario(String id) async {
-    final response = await http
-        .get(Uri.parse('http://localhost:3000/api/V1/users/$id'));
-
-    if (response.statusCode == 200) {
-      var decodeUsuarios = json.decode(response.body);
-      Map <String, dynamic> lista = decodeUsuarios;
-      List<Usuario> listaUsuario = [];
-      Usuario usuario;
-
-      try {
-        // lista.forEach((value) {
-          // usuario = Usuario(value)
-        // })
-      } catch (e) {
-        
-      }
-
-
-      return Usuario.fromJson(jsonDecode(response.body));
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+  Future<String> createLoginState(String email, String password) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:3000/api/v1/auth/signin/'),
+        headers: <String, String>{
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: {
+          'email': email,
+          'password': password,
+        },
+      );
+      print(response.statusCode);
+      requestCode = response.statusCode;
+      print(requestCode);
+    } catch (e) {
+      print(e);
     }
+
+    return "string vazia";
   }
 
   @override
@@ -88,8 +92,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 30),
                 TextFormField(
-                  readOnly: true,
-                  initialValue: "John Doe",
+                  readOnly: false,
+                  controller: _controllerEmail,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Email Address",
@@ -97,8 +101,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
-                  readOnly: true,
-                  initialValue: "password123",
+                  readOnly: false,
+                  controller: _controllerPassword,
                   obscureText: _isObscure,
                   decoration: InputDecoration(
                     suffixIcon: Padding(
@@ -124,7 +128,27 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(
+                        () {
+                          Timer(
+                            const Duration(seconds: 1),
+                            () {
+                              if (requestCode == 201) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context, {rootNavigator = false}) => const AllGames(),
+                                  ),
+                                );
+                              }
+                            },
+                          );
+                          createLoginState(
+                              _controllerEmail.text, _controllerPassword.text);
+                        },
+                      );
+                    },
                     child: Text(
                       "Sign in".toUpperCase(),
                       style: const TextStyle(
