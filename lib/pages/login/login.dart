@@ -2,11 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:meevun_2/main.dart';
+import 'package:meevun_2/models/token_usuarios.dart';
 import 'package:meevun_2/pages/login/create_account.dart';
-import '../Usuarios.dart';
 import 'package:http/http.dart' as http;
-
-import '../home/all_games.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controllerPassword = TextEditingController();
   int requestCode = 0;
 
+  String auxiliar = "";
+
   Future<String> createLoginState(String email, String password) async {
     try {
       final response = await http.post(
@@ -35,9 +36,13 @@ class _LoginPageState extends State<LoginPage> {
           'password': password,
         },
       );
-      print(response.statusCode);
+
       requestCode = response.statusCode;
-      print(requestCode);
+
+      String parsedJson = jsonEncode(response.body);
+      String token = parsedJson.substring(14, 202);
+
+      auxiliar = token;
     } catch (e) {
       print(e);
     }
@@ -47,6 +52,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final tokenUsuarioGlobal = Provider.of<tokenUsuario>(context);
+    tokenUsuarioGlobal.accessToken(auxiliar);
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +146,9 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context, {rootNavigator = false}) => const AllGames(),
+                                    builder: (context,
+                                            {rootNavigator = false}) =>
+                                        const AllGames(),
                                   ),
                                 );
                               }
@@ -165,4 +175,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  void setToken() {}
 }

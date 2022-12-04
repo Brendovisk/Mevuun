@@ -55,6 +55,22 @@ class Usuario {
     }
     return data;
   }
+
+  String? getName() {
+    return this.name;
+  }
+
+  String? getLastName() {
+    return this.lastname;
+  }
+
+  String? getEmail() {
+    return this.email;
+  }
+
+  String? getPassword() {
+    return this.password;
+  }
 }
 
 class Id {

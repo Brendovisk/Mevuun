@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:meevun_2/pages/home/game_view.dart';
 import 'package:meevun_2/pages/search/search.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_grid/responsive_grid.dart';
+import '../../models/token_usuarios.dart';
 import 'add_new_game.dart';
+import 'package:http/http.dart' as http;
 
 class AllGamesPage extends StatefulWidget {
   const AllGamesPage({super.key});
@@ -12,8 +15,31 @@ class AllGamesPage extends StatefulWidget {
 }
 
 class AllGamesPageState extends State<AllGamesPage> {
+  String auxiliar = "";
+  
+  Future<String> createLoginState(String email, String password) async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://localhost:3000/api/v1/games'),
+        headers: <String, String>{
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer $auxiliar',
+        },
+      );
+      print(response.body);
+    } catch (e) {
+      print(e);
+    }
+
+    return "string vazia";
+  }
+
   @override
   Widget build(BuildContext context) {
+    final tokenUsuarioGlobal = Provider.of<tokenUsuario>(context);
+    String token = tokenUsuarioGlobal.getToken();
+    auxiliar = token;
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
