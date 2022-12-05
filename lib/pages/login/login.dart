@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
       print(e);
     }
 
-    return "string vazia";
+    return "";
   }
 
   @override

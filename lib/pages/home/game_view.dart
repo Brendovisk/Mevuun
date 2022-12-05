@@ -107,6 +107,7 @@ class GameViewPage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: null,
         onPressed: () {
           debugPrint("Add to favorites");
         },

@@ -124,6 +124,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 bottom: 20,
                 right: 20,
                 child: FloatingActionButton.extended(
+                  heroTag: null,
                   label: enabledDarkMode
                       ? const Text("Light Theme")
                       : const Text('Dark Theme'),
