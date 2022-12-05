@@ -129,17 +129,20 @@ class AllGamesPageState extends State<AllGamesPage> {
                               child: Stack(
                                 children: [
                                   ClipRRect(
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(14),
-                                      topRight: Radius.circular(14),
-                                    ),
-                                    child: Image.network(
-                                      images[i],
-                                      height: 200,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(14),
+                                        topRight: Radius.circular(14),
+                                      ),
+                                      child: FadeInImage.assetNetwork(
+                                        fadeInDuration:
+                                            const Duration(milliseconds: 1500),
+                                        placeholder:
+                                            'assets/images/placeholder.jpg',
+                                        image: images[i],
+                                        height: 200,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                      )),
                                   Positioned(
                                     bottom: 30,
                                     left: 15,
