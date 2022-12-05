@@ -1,7 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class AddNewgame extends StatelessWidget {
-  const AddNewgame({super.key});
+class AddNewGame extends StatefulWidget {
+  const AddNewGame({super.key});
+
+  @override
+  State<AddNewGame> createState() => _AddNewGameState();
+}
+
+class _AddNewGameState extends State<AddNewGame> {
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerDescription = TextEditingController();
+  final TextEditingController _controllerImage = TextEditingController();
+
+  Future<http.Response> addGame(
+      String image, String name, String description) async {
+    final response = await http.post(
+      Uri.parse('http://localhost:3000/api/v1/games/'),
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzhiNGRhNWQwMDVlM2JhOGU3OTg1YjAiLCJlbWFpbCI6ImJyZW5kb24uZnJhbmNvbGl2ZWlyYUBnbWFpbC5jb20iLCJpYXQiOjE2NzAwNzg4MDAsImV4cCI6MTY3MDY4MzYwMH0.yPRTZKfSntGzfyerTpg4YzN9xXEjiS0xbaPHAfHFDDo',
+      },
+      body: {
+        'name': name,
+        'description': description,
+        'image': image,
+      },
+    );
+
+    return response;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,21 +49,19 @@ class AddNewgame extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: ListView(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Click to add a banner"),
-                const SizedBox(height: 8),
-                Image.asset(
-                  "images/placeholder.jpg",
-                  height: 300,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ],
+            TextFormField(
+              controller: _controllerImage,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Paste the URL of the image",
+                labelText: "Image",
+              ),
+              readOnly: false,
+              maxLines: 1,
             ),
             const SizedBox(height: 25),
             TextFormField(
+              controller: _controllerName,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Write the full name of the game",
@@ -45,6 +72,7 @@ class AddNewgame extends StatelessWidget {
             ),
             const SizedBox(height: 25),
             TextFormField(
+              controller: _controllerDescription,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Write the description of the game",
@@ -72,7 +100,15 @@ class AddNewgame extends StatelessWidget {
                 const SizedBox(width: 12),
                 ElevatedButton(
                   onPressed: () {
-                    debugPrint("Save game");
+                    setState(
+                      () {
+                        addGame(
+                          _controllerImage.text,
+                          _controllerName.text,
+                          _controllerDescription.text,
+                        );
+                      },
+                    );
                   },
                   child: const Padding(
                     padding: EdgeInsets.fromLTRB(22, 8, 22, 8),

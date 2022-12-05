@@ -81,7 +81,7 @@ class AllGamesPageState extends State<AllGamesPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => const AddNewgame(),
+                builder: (_) => const AddNewGame(),
               ),
             );
           },

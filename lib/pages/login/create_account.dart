@@ -113,15 +113,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     labelText: "Password",
                   ),
                 ),
-                // const SizedBox(height: 20),
-                // TextFormField(
-                //   readOnly: false,
-                //   obscureText: _isObscure,
-                //   decoration: const InputDecoration(
-                //     border: OutlineInputBorder(),
-                //     labelText: "Re-type Password",
-                //   ),
-                // ),
                 const SizedBox(height: 30),
                 SizedBox(
                   width: double.infinity,
