@@ -2,10 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:meevun_2/main.dart';
-import 'package:meevun_2/models/token_usuarios.dart';
 import 'package:meevun_2/pages/login/create_account.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -44,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
 
       auxiliar = token;
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
 
@@ -52,9 +51,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final tokenUsuarioGlobal = Provider.of<tokenUsuario>(context);
-    tokenUsuarioGlobal.accessToken(auxiliar);
-
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
