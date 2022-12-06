@@ -103,71 +103,77 @@ class AllGamesPageState extends State<AllGamesPage> {
             List names = allGames.map<String>((e) => e['name']).toList();
             List images = allGames.map<String>((e) => e['image']).toList();
 
-            return ListView(
-              children: [
-                ResponsiveGridRow(
+            return RefreshIndicator(
+                child: ListView(
                   children: [
-                    for (int i = 0; i < allGames.length; i++)
-                      ResponsiveGridCol(
-                        lg: 3,
-                        md: 6,
-                        xs: 12,
-                        child: Card(
-                          elevation: 5,
-                          margin: const EdgeInsets.fromLTRB(15, 0, 15, 30),
-                          color: Theme.of(context).colorScheme.surfaceVariant,
-                          child: InkWell(
-                            splashColor:
-                                Theme.of(context).colorScheme.surfaceVariant,
-                            onTap: () {
-                              gameService.setI(i);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const GameViewPage(),
-                                ),
-                              );
-                            },
-                            child: SizedBox(
-                              height: 300,
-                              child: Stack(
-                                children: [
-                                  ClipRRect(
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(14),
-                                        topRight: Radius.circular(14),
-                                      ),
-                                      child: FadeInImage.assetNetwork(
-                                        fadeInDuration:
-                                            const Duration(milliseconds: 1500),
-                                        placeholder:
-                                            'assets/images/placeholder.jpg',
-                                        image: images[i],
-                                        height: 200,
-                                        width: double.infinity,
-                                        fit: BoxFit.cover,
-                                      )),
-                                  Positioned(
-                                    bottom: 30,
-                                    left: 15,
-                                    child: Text(
-                                      names[i].toUpperCase(),
-                                      style: const TextStyle(
-                                        fontSize: 28,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                    ResponsiveGridRow(
+                      children: [
+                        for (int i = 0; i < allGames.length; i++)
+                          ResponsiveGridCol(
+                            lg: 3,
+                            md: 6,
+                            xs: 12,
+                            child: Card(
+                              elevation: 5,
+                              margin: const EdgeInsets.fromLTRB(15, 0, 15, 30),
+                              color:
+                                  Theme.of(context).colorScheme.surfaceVariant,
+                              child: InkWell(
+                                splashColor: Theme.of(context)
+                                    .colorScheme
+                                    .surfaceVariant,
+                                onTap: () {
+                                  gameService.setI(i);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const GameViewPage(),
                                     ),
+                                  );
+                                },
+                                child: SizedBox(
+                                  height: 300,
+                                  child: Stack(
+                                    children: [
+                                      ClipRRect(
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(14),
+                                            topRight: Radius.circular(14),
+                                          ),
+                                          child: FadeInImage.assetNetwork(
+                                            fadeInDuration: const Duration(
+                                                milliseconds: 1500),
+                                            placeholder:
+                                                'assets/images/placeholder.jpg',
+                                            image: images[i],
+                                            height: 200,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                          )),
+                                      Positioned(
+                                        bottom: 30,
+                                        left: 15,
+                                        child: Text(
+                                          names[i].toUpperCase(),
+                                          style: const TextStyle(
+                                            fontSize: 28,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            );
+                onRefresh: () async {
+                  setState(() {});
+                });
           } else {
             return const Center(
               child: CircularProgressIndicator(),

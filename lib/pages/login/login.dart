@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const Center(
                   child: Text(
-                    "Logo",
+                    "Mevuun",
                     style: TextStyle(
                       fontSize: 60,
                       fontWeight: FontWeight.w900,

@@ -37,20 +37,17 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Return"),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(),
+      body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 25, right: 25),
+            padding: const EdgeInsets.all(25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Center(
                   child: Text(
-                    "Logo",
+                    "Mevuun",
                     style: TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.w900,
