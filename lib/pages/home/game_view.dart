@@ -15,7 +15,7 @@ class GameViewPage extends StatefulWidget {
 class _GameViewPageState extends State<GameViewPage> {
   List gamesDecoded = [];
 
-  Future<List> showAllGames() async {
+  Future<List> showGame() async {
     await Future.delayed(const Duration(seconds: 1));
 
     final response = await http.get(
@@ -32,100 +32,119 @@ class _GameViewPageState extends State<GameViewPage> {
     return gamesDecoded;
   }
 
+  Future<http.Response> deleteGame(String id) async {
+    final http.Response response = await http.delete(
+      Uri.parse('http://localhost:3000/api/v1/games/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzhiNGRhNWQwMDVlM2JhOGU3OTg1YjAiLCJlbWFpbCI6ImJyZW5kb24uZnJhbmNvbGl2ZWlyYUBnbWFpbC5jb20iLCJpYXQiOjE2NzAwNzg4MDAsImV4cCI6MTY3MDY4MzYwMH0.yPRTZKfSntGzfyerTpg4YzN9xXEjiS0xbaPHAfHFDDo',
+      },
+    );
+
+    return response;
+  }
+
   @override
   Widget build(BuildContext context) {
     final gameService = Provider.of<GameView>(context);
 
-    showAllGames();
+    List teste = gamesDecoded.map<String>((e) => e['_id']).toList();
 
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 5, 15, 0),
-            child: PopupMenuButton<Text>(
-              itemBuilder: (content) {
-                return [
-                  PopupMenuItem(
-                    height: 46,
-                    padding: const EdgeInsets.all(0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 46,
-                      child: TextButton.icon(
-                        style: TextButton.styleFrom(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.zero),
-                          ),
-                        ),
-                        icon: const Icon(Icons.edit),
-                        label: const Text("Edit"),
-                        onPressed: () {
-                          debugPrint("Edit game");
-                        },
-                      ),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    height: 46,
-                    padding: const EdgeInsets.all(0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 46,
-                      child: TextButton.icon(
-                        style: TextButton.styleFrom(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.zero),
-                          ),
-                        ),
-                        icon: const Icon(Icons.delete),
-                        label: const Text("Delete"),
-                        onPressed: () => showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: const Text('Delete game'),
-                            content: const Text('Are you sure about that?'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.pop(context, 'Cancel'),
-                                child: const Text('Cancel'),
+    showGame();
+
+    return FutureBuilder(
+      future: showGame(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List allGames = snapshot.data!;
+          List name = allGames.map<String>((e) => e['name']).toList();
+          List description =
+              allGames.map<String>((e) => e['description']).toList();
+          List images = allGames.map<String>((e) => e['image']).toList();
+          List id = allGames.map<String>((e) => e['_id']).toList();
+
+          return Scaffold(
+            appBar: AppBar(
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 5, 15, 0),
+                  child: PopupMenuButton<Text>(
+                    itemBuilder: (content) {
+                      return [
+                        PopupMenuItem(
+                          height: 46,
+                          padding: const EdgeInsets.all(0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 46,
+                            child: TextButton.icon(
+                              style: TextButton.styleFrom(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.zero),
+                                ),
                               ),
-                              TextButton(
-                                onPressed: () => Navigator.pop(context, 'OK'),
-                                child: const Text('OK'),
-                              ),
-                            ],
+                              icon: const Icon(Icons.edit),
+                              label: const Text("Edit"),
+                              onPressed: () {
+                                debugPrint("Edit game");
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                        PopupMenuItem(
+                          height: 46,
+                          padding: const EdgeInsets.all(0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 46,
+                            child: TextButton.icon(
+                              style: TextButton.styleFrom(
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(Radius.zero),
+                                ),
+                              ),
+                              icon: const Icon(Icons.delete),
+                              label: const Text("Delete"),
+                              onPressed: () => showDialog<String>(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: const Text('Delete game'),
+                                  content:
+                                      const Text('Are you sure about that?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(context, 'Cancel'),
+                                      child: const Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        deleteGame(id[gameService.i]);
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ];
+                    },
                   ),
-                ];
-              },
+                ),
+              ],
+              toolbarHeight: 72,
+              title: Text(
+                ("Game").toUpperCase(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 24,
+                ),
+              ),
             ),
-          ),
-        ],
-        toolbarHeight: 72,
-        title: Text(
-          ("Game").toUpperCase(),
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 24,
-          ),
-        ),
-      ),
-      body: FutureBuilder(
-        future: showAllGames(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List allGames = snapshot.data!;
-            List name = allGames.map<String>((e) => e['name']).toList();
-            List description =
-                allGames.map<String>((e) => e['description']).toList();
-            List images = allGames.map<String>((e) => e['image']).toList();
-
-            return ListView(
+            body: ListView(
               children: [
                 FadeInImage.assetNetwork(
                   fadeInDuration: const Duration(milliseconds: 1500),
@@ -160,22 +179,22 @@ class _GameViewPageState extends State<GameViewPage> {
                   ),
                 ),
               ],
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        heroTag: null,
-        onPressed: () {
-          debugPrint("Add to favorites");
-        },
-        label: const Text("Add to favorites"),
-        icon: const Icon(Icons.star_outline),
-      ),
+            ),
+            floatingActionButton: FloatingActionButton.extended(
+              heroTag: null,
+              onPressed: () {
+                debugPrint("Add to favorites");
+              },
+              label: const Text("Add to favorites"),
+              icon: const Icon(Icons.star_outline),
+            ),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }

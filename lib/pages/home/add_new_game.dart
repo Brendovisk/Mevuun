@@ -107,6 +107,7 @@ class _AddNewGameState extends State<AddNewGame> {
                           _controllerName.text,
                           _controllerDescription.text,
                         );
+                        Navigator.pop(context);
                       },
                     );
                   },
