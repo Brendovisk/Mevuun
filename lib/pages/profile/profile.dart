@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:meevun_2/pages/profile/profile_edit.dart';
+import 'package:http/http.dart' as http;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -10,67 +11,30 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  List userDecoded = [];
+
+  Future<List> listUser() async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    final response = await http.get(
+      Uri.parse('localhost:3000/api/v1/users/638d0053bfc8025d82cd6165'),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzhiNGRhNWQwMDVlM2JhOGU3OTg1YjAiLCJlbWFpbCI6ImJyZW5kb24uZnJhbmNvbGl2ZWlyYUBnbWFpbC5jb20iLCJpYXQiOjE2NzAwNzg4MDAsImV4cCI6MTY3MDY4MzYwMH0.yPRTZKfSntGzfyerTpg4YzN9xXEjiS0xbaPHAfHFDDo',
+      },
+    );
+
+    userDecoded = json.decode(response.body) as List;
+
+    return userDecoded;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 5, 15, 0),
-            child: PopupMenuButton<Text>(
-              itemBuilder: (context) {
-                return [
-                  PopupMenuItem(
-                    height: 46,
-                    padding: const EdgeInsets.all(0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 46,
-                      child: TextButton.icon(
-                        style: TextButton.styleFrom(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.zero),
-                          ),
-                        ),
-                        icon: const Icon(Icons.edit),
-                        label: const Text("Edit"),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const ProfileEditPage(),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    height: 46,
-                    padding: const EdgeInsets.all(0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 46,
-                      child: TextButton.icon(
-                        style: TextButton.styleFrom(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.zero),
-                          ),
-                        ),
-                        icon: const Icon(Icons.logout),
-                        label: const Text("Logout"),
-                        onPressed: () {
-                          debugPrint("Logout");
-                        },
-                      ),
-                    ),
-                  ),
-                ];
-              },
-            ),
-          ),
-        ],
         title: const Text(
           "Profile",
           style: TextStyle(
@@ -84,66 +48,75 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context, box, child) {
           final isDark = box.get('isDark', defaultValue: false);
           bool enabledDarkMode = isDark;
-          return Stack(
-            children: [
-              ListView(
+
+          return FutureBuilder(
+            future: listUser(),
+            builder: (context, snapshot) {
+              return Stack(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.asset("images/placeholder-profile.png",
-                              width: 160, height: 160),
+                  ListView(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              readOnly: true,
+                              // initialValue: firstName[1],
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: "John",
+                              ),
+                            ),
+                            const SizedBox(height: 28),
+                            TextFormField(
+                              readOnly: true,
+                              // initialValue: lastName[2],
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: "Doe",
+                              ),
+                            ),
+                            const SizedBox(height: 28),
+                            TextFormField(
+                              readOnly: true,
+                              // initialValue: email[3],
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: "john@gmail.com",
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 28),
-                        TextFormField(
-                          readOnly: true,
-                          initialValue: "John Doe",
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Full Name",
-                          ),
-                        ),
-                        const SizedBox(height: 28),
-                        TextFormField(
-                          readOnly: true,
-                          initialValue: "john.doe@email.com",
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Email Address",
-                          ),
-                        ),
-                      ],
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    bottom: 20,
+                    right: 20,
+                    child: FloatingActionButton.extended(
+                      heroTag: null,
+                      label: enabledDarkMode
+                          ? const Text("Light Theme")
+                          : const Text('Dark Theme'),
+                      icon: enabledDarkMode
+                          ? const Icon(Icons.light_mode)
+                          : const Icon(Icons.dark_mode),
+                      elevation: 1,
+                      onPressed: () {
+                        setState(() {
+                          if (enabledDarkMode == true) {
+                            box.put('isDark', false);
+                          } else {
+                            box.put('isDark', true);
+                          }
+                        });
+                      },
                     ),
                   ),
                 ],
-              ),
-              Positioned(
-                bottom: 20,
-                right: 20,
-                child: FloatingActionButton.extended(
-                  heroTag: null,
-                  label: enabledDarkMode
-                      ? const Text("Light Theme")
-                      : const Text('Dark Theme'),
-                  icon: enabledDarkMode
-                      ? const Icon(Icons.light_mode)
-                      : const Icon(Icons.dark_mode),
-                  elevation: 1,
-                  onPressed: () {
-                    setState(() {
-                      if (enabledDarkMode == true) {
-                        box.put('isDark', false);
-                      } else {
-                        box.put('isDark', true);
-                      }
-                    });
-                  },
-                ),
-              ),
-            ],
+              );
+            },
           );
         },
       )),

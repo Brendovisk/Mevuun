@@ -126,6 +126,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                             _controllerEmail.text,
                             _controllerPassword.text,
                           );
+                          Navigator.pop(context);
                         },
                       );
                     },

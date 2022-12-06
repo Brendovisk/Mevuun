@@ -49,8 +49,6 @@ class _GameViewPageState extends State<GameViewPage> {
   Widget build(BuildContext context) {
     final gameService = Provider.of<GameView>(context);
 
-    List teste = gamesDecoded.map<String>((e) => e['_id']).toList();
-
     showGame();
 
     return FutureBuilder(

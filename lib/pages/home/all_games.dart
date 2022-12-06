@@ -158,17 +158,6 @@ class AllGamesPageState extends State<AllGamesPage> {
                                       ),
                                     ),
                                   ),
-                                  Positioned(
-                                    right: 10,
-                                    bottom: 110,
-                                    child: FloatingActionButton(
-                                      heroTag: null,
-                                      child: const Icon(Icons.star_outline),
-                                      onPressed: () {
-                                        debugPrint("Make favorite");
-                                      },
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),

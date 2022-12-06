@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:meevun_2/main.dart';
 import 'package:meevun_2/pages/login/create_account.dart';
 import 'package:http/http.dart' as http;
+import 'package:meevun_2/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,8 +22,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controllerPassword = TextEditingController();
   int requestCode = 0;
 
-  String auxiliar = "";
-
   Future<String> createLoginState(String email, String password) async {
     try {
       final response = await http.post(
@@ -36,11 +36,6 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       requestCode = response.statusCode;
-
-      String parsedJson = jsonEncode(response.body);
-      String token = parsedJson.substring(14, 202);
-
-      auxiliar = token;
     } catch (e) {
       // ignore: avoid_print
       print(e);
@@ -51,6 +46,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    // final userService = Provider.of<UserView>(context);
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
