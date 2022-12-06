@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             TextFormField(
                               readOnly: true,
-                              // initialValue: firstName[1],
+                              initialValue: "John",
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: "John",
@@ -71,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             const SizedBox(height: 28),
                             TextFormField(
                               readOnly: true,
-                              // initialValue: lastName[2],
+                              initialValue: "Doe",
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: "Doe",
@@ -80,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             const SizedBox(height: 28),
                             TextFormField(
                               readOnly: true,
-                              // initialValue: email[3],
+                              initialValue: "john@gmail.com",
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: "john@gmail.com",
