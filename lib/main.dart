@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meevun_2/models/token_usuarios.dart';
 import 'package:meevun_2/pages/home/all_games.dart';
 import 'package:meevun_2/pages/favorite/favorite_games.dart';
 import 'package:meevun_2/pages/login/login.dart';
@@ -13,9 +12,6 @@ Future<void> main() async {
   await Hive.openBox('settings');
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(
-        create: (context) => TokenUsuario(),
-      ),
       ChangeNotifierProvider(
         create: (context) => GameView(),
       ),
@@ -46,8 +42,7 @@ class MyApp extends StatelessWidget {
                   useMaterial3: true,
                   brightness: Brightness.light,
                 ),
-          // home: const LoginPage(),
-          home: const AllGames(),
+          home: const LoginPage(),
         );
       },
     );

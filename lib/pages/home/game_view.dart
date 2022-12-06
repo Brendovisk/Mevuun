@@ -32,6 +32,46 @@ class _GameViewPageState extends State<GameViewPage> {
     return gamesDecoded;
   }
 
+  Future<String> likeGame(String id) async {
+    try {
+      final http.Response response = await http.patch(
+        Uri.parse('localhost:3000/api/v1/games/like/$id'),
+        headers: <String, String>{
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization':
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzhiNGRhNWQwMDVlM2JhOGU3OTg1YjAiLCJlbWFpbCI6ImJyZW5kb24uZnJhbmNvbGl2ZWlyYUBnbWFpbC5jb20iLCJpYXQiOjE2NzAwNzg4MDAsImV4cCI6MTY3MDY4MzYwMH0.yPRTZKfSntGzfyerTpg4YzN9xXEjiS0xbaPHAfHFDDo',
+        },
+      );
+      // ignore: avoid_print
+      print(response.statusCode);
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+    return "";
+  }
+
+  Future<String> unlikedGame(String id) async {
+    try {
+      final http.Response response = await http.patch(
+        Uri.parse('localhost:3000/api/v1/games/unlike/$id'),
+        headers: <String, String>{
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization':
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzhiNGRhNWQwMDVlM2JhOGU3OTg1YjAiLCJlbWFpbCI6ImJyZW5kb24uZnJhbmNvbGl2ZWlyYUBnbWFpbC5jb20iLCJpYXQiOjE2NzAwNzg4MDAsImV4cCI6MTY3MDY4MzYwMH0.yPRTZKfSntGzfyerTpg4YzN9xXEjiS0xbaPHAfHFDDo',
+        },
+      );
+
+      // ignore: avoid_print
+      print(response.statusCode);
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+
+    return "";
+  }
+
   Future<http.Response> deleteGame(String id) async {
     final http.Response response = await http.delete(
       Uri.parse('http://localhost:3000/api/v1/games/$id'),
@@ -61,6 +101,7 @@ class _GameViewPageState extends State<GameViewPage> {
               allGames.map<String>((e) => e['description']).toList();
           List images = allGames.map<String>((e) => e['image']).toList();
           List id = allGames.map<String>((e) => e['_id']).toList();
+          List liked = allGames.map<bool>((e) => e['liked']).toList();
 
           return Scaffold(
             appBar: AppBar(
@@ -70,26 +111,6 @@ class _GameViewPageState extends State<GameViewPage> {
                   child: PopupMenuButton<Text>(
                     itemBuilder: (content) {
                       return [
-                        PopupMenuItem(
-                          height: 46,
-                          padding: const EdgeInsets.all(0),
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 46,
-                            child: TextButton.icon(
-                              style: TextButton.styleFrom(
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(Radius.zero),
-                                ),
-                              ),
-                              icon: const Icon(Icons.edit),
-                              label: const Text("Edit"),
-                              onPressed: () {
-                                debugPrint("Edit game");
-                              },
-                            ),
-                          ),
-                        ),
                         PopupMenuItem(
                           height: 46,
                           padding: const EdgeInsets.all(0),
@@ -119,6 +140,7 @@ class _GameViewPageState extends State<GameViewPage> {
                                     TextButton(
                                       onPressed: () {
                                         deleteGame(id[gameService.i]);
+                                        Navigator.pop(context);
                                       },
                                       child: const Text('OK'),
                                     ),
@@ -180,11 +202,15 @@ class _GameViewPageState extends State<GameViewPage> {
             ),
             floatingActionButton: FloatingActionButton.extended(
               heroTag: null,
-              onPressed: () {
-                debugPrint("Add to favorites");
-              },
               label: const Text("Add to favorites"),
               icon: const Icon(Icons.star_outline),
+              onPressed: () {
+                if (liked[gameService.i] == true) {
+                  unlikedGame(id[gameService.i]);
+                } else {
+                  likeGame(id[gameService.i]);
+                }
+              },
             ),
           );
         } else {

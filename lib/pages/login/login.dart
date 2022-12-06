@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:meevun_2/main.dart';
 import 'package:meevun_2/pages/login/create_account.dart';
 import 'package:http/http.dart' as http;
-import 'package:meevun_2/providers/user_provider.dart';
-import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -46,8 +43,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final userService = Provider.of<UserView>(context);
-
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -168,6 +163,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-  void setToken() {}
 }
