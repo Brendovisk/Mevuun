@@ -2,10 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:meevun_2/pages/search/search.dart';
+import 'package:meevun_2/providers/game_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'add_new_game.dart';
 import 'package:http/http.dart' as http;
-
 import 'game_view.dart';
 
 class AllGamesPage extends StatefulWidget {
@@ -37,6 +38,8 @@ class AllGamesPageState extends State<AllGamesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final gameService = Provider.of<GameView>(context);
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
@@ -117,6 +120,7 @@ class AllGamesPageState extends State<AllGamesPage> {
                             splashColor:
                                 Theme.of(context).colorScheme.surfaceVariant,
                             onTap: () {
+                              gameService.setI(i);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
